@@ -16,36 +16,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 // Registration route
-router.post('/register', upload.single('image'), async (req, res) => {
+router.post('/test', async (req, res) => {
     try {
-        const { name, email, mobileNumber, password } = req.body;
-        const image = req.file ? req.file.filename : '';
-
-        // Check if user already exists
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ error: 'User already exists' });
-        }
-
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create new user
-        const newUser = new User({
-            name,
-            email,
-            mobileNumber,
-            image,
-            password: hashedPassword
-        });
-        await newUser.save();
-        
-        res.status(201).json({ message: 'User registered successfully' });
+        // Handle POST request logic here
+        res.status(200).json({ message: 'Test route successfully accessed' });
     } catch (error) {
-        console.error('Error registering user:', error);
+        console.error('Error:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // Login route
 router.post('/login', upload.single('image'),async (req, res) => {
